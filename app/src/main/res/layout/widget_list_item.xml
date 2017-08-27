@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/ingredientNames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="8dp"
+
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="Ingredient Name" />
+
+        <TextView
+            android:id="@+id/ingredientQuantitys"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ingredientNames"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="#f16160"
+            tools:text="Quantity: " />
+
+        <LinearLayout
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/ingredientQuantitys"
+
+            android:layout_marginTop="8dp"
+            android:background="#f2f2f2"
+            android:orientation="horizontal" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
