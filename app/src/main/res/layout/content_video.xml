@@ -77,6 +77,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <RelativeLayout
+        android:id="@+id/detail_step_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

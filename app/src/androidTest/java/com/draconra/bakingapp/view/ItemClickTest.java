@@ -29,6 +29,7 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
@@ -51,6 +52,13 @@ public class ItemClickTest {
 
     @Test
     public void itemClickTest2() {
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recipeRecyclerView), isDisplayed()));
         recyclerView.perform(actionOnItemAtPosition(2, click()));
@@ -65,6 +73,34 @@ public class ItemClickTest {
                                 0),
                         isDisplayed()));
         textView.check(matches(withText("Yellow Cake")));
+
+        ViewInteraction recyclerView2 = onView(
+                allOf(withId(R.id.stepsRV), isDisplayed()));
+        recyclerView2.perform(actionOnItemAtPosition(0, click()));
+
+        onView(allOf(withId(R.id.descriptionText), withText("Recipe Introduction")))
+                .check(matches(withText("Recipe Introduction")));
+
+        onView(allOf(withId(R.id.next)))
+                .check(matches(isDisplayed()));
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(allOf(withId(R.id.next), withParent(withId(R.id.detail_step_nav)))).perform(click());
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(allOf(withId(R.id.descriptionText), withText("1. Preheat the oven to 350\u00b0F. Butter the bottoms and sides of two 9\" round pans with 2\"-high sides. Cover the bottoms of the pans with rounds of parchment paper, and butter the paper as well.")))
+                .check(matches(withText("1. Preheat the oven to 350\u00b0F. Butter the bottoms and sides of two 9\" round pans with 2\"-high sides. Cover the bottoms of the pans with rounds of parchment paper, and butter the paper as well.")));
+
 
     }
 

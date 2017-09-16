@@ -48,6 +48,8 @@ public class VideoFragment extends Fragment {
     @BindView(R.id.baseLayout)
     RelativeLayout baseLayout;
     Unbinder unbinder;
+    @BindView(R.id.detail_step_nav)
+    RelativeLayout detailStepNav;
 
     private String mDescription;
     private String mVideoURL, thumbnailUrl;
@@ -127,13 +129,16 @@ public class VideoFragment extends Fragment {
             descriptionText.setText(mDescription);
         }
 
+    }
+
+    private void initializePlayer() {
         mPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), new DefaultTrackSelector(), new DefaultLoadControl());
         mPlayerView.setPlayer(mPlayer);
         mPlayer.setPlayWhenReady(autoPlay);
 
         mPlayer.seekTo(currentWindow, playbackPosition);
         Uri videoUri = Uri.parse(mVideoURL);
-        MediaSource mediaSource = MediaPlayerHelper.buildMediaSource(getActivity(),videoUri);
+        MediaSource mediaSource = MediaPlayerHelper.buildMediaSource(getActivity(), videoUri);
         mPlayer.prepare(mediaSource);
 
         if (mPlayer.isLoading()) {
@@ -165,6 +170,21 @@ public class VideoFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Util.SDK_INT <= 23) {
+            initializePlayer();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (Util.SDK_INT <= 23) {
+            initializePlayer();
+        }
+    }
 
     @Override
     public void onPause() {
