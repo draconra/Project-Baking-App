@@ -14,6 +14,7 @@ import com.draconra.bakingapp.R;
 import com.draconra.bakingapp.model.Recipe;
 import com.draconra.bakingapp.model.Step;
 import com.draconra.bakingapp.util.Constant;
+import com.draconra.bakingapp.util.helper.CheckTabletHelper;
 import com.draconra.bakingapp.util.helper.RedirectHelper;
 import com.draconra.bakingapp.view.core.BaseActivity;
 import com.draconra.bakingapp.view.fragment.IngredientsFragment;
@@ -46,7 +47,7 @@ public class RecipeActivity extends BaseActivity implements RecipeDetailsFragmen
         recipe = getIntent().getParcelableExtra(Intent.EXTRA_TEXT);
         getSupportActionBar().setTitle(recipe.getName());
 
-        if (findViewById(R.id.tablet_linear_layout) != null) {
+        if (CheckTabletHelper.isTablet(this)) {
             twoPanes = true; // Double-pane mode
             FragmentManager fragmentManager = getSupportFragmentManager();
             if (savedInstanceState == null) {
@@ -103,21 +104,18 @@ public class RecipeActivity extends BaseActivity implements RecipeDetailsFragmen
         bundle.putString("thumbnailUrl", step.getThumbnailURL());
 
 
-        if (bundle != null) {
+        videoFragment.setArguments(bundle);
 
-            videoFragment.setArguments(bundle);
-
-            if (twoPanes) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.recipeContainer, videoFragment)
-                        .commit();
-            } else {
-                toolbar.setTitle(sDescription);
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.recipeContainer, videoFragment)
-                        .addToBackStack(VideoFragment.class.getSimpleName())
-                        .commit();
-            }
+        if (twoPanes) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.recipeContainer, videoFragment)
+                    .commit();
+        } else {
+            toolbar.setTitle(sDescription);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.recipeContainer, videoFragment)
+                    .addToBackStack(VideoFragment.class.getSimpleName())
+                    .commit();
         }
 
     }

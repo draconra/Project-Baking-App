@@ -2,4 +2,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="list_item_height">60dp</dimen>
+
+    <dimen name="dp_22">22dp</dimen>
 </resources>

@@ -3,6 +3,7 @@ package com.draconra.bakingapp.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         final Recipe recipes = recipeList.get(position);
 
         holder.recipeName.setText(recipes.getName());
-        if (recipes.getImage() == "") {
+
+        if (TextUtils.isEmpty(recipes.getImage())) {
             Glide.with(holder.itemView.getContext())
                     .load(mImages.get(position)).into(holder.recipeImage);
         } else {
@@ -71,14 +73,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
         recipeList.addAll(recipes);
         notifyDataSetChanged();
     }
-
-
-    public void setDataAdapter(List<Recipe> recipes) {
-        recipeList.clear();
-        recipeList.addAll(recipes);
-        notifyDataSetChanged();
-    }
-
 
     class HomeViewHolder extends RecyclerView.ViewHolder {
 

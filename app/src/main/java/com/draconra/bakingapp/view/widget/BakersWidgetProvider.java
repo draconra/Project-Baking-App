@@ -21,9 +21,6 @@ import java.util.List;
 public class BakersWidgetProvider implements RemoteViewsService.RemoteViewsFactory {
 
     private Context mContext;
-    private Recipe recipe;
-    private List<Ingredient> ingredients;
-    private ArrayList<Ingredient> ing;
     private JSONArray mArray;
     private JSONArray ingredient;
     private String recipeName;
@@ -92,21 +89,11 @@ public class BakersWidgetProvider implements RemoteViewsService.RemoteViewsFacto
     @Override
     public RemoteViews getViewAt(int position) {
         RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_item);
-        /*String ingredientss = ingredients.get(position).getIngredient();
-        String measure = ingredients.get(position).getMeasure();
-        double quantity = ingredients.get(position).getQuantity();
 
-        views.setTextViewText(R.id.ingredientNames, ingredientss);
-        views.setTextViewText(R.id.ingredientQuantitys, quantity + measure.toLowerCase() + "s");
-
-        Intent intent = new Intent();
-        intent.putExtra("position", position);
-        views.setOnClickFillInIntent(R.id.recipeRecyclerView, intent);
-
-        return views;*/
         String Ingredient = null;
         int quantity = 0;
         String measure = null;
+
         try {
             JSONObject object = ingredient.getJSONObject(position);
 
@@ -117,8 +104,9 @@ public class BakersWidgetProvider implements RemoteViewsService.RemoteViewsFacto
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
         views.setTextViewText(R.id.ingredientNames, Ingredient);
-        views.setTextViewText(R.id.ingredientQuantitys, quantity + measure.toLowerCase() + "s");
+        views.setTextViewText(R.id.ingredientQuantitys, quantity +" "+ measure.toLowerCase() + "s");
 
         Intent intent = new Intent();
         intent.putExtra("position", position);

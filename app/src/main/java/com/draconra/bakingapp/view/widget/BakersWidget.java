@@ -6,17 +6,20 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.draconra.bakingapp.AppController;
 import com.draconra.bakingapp.R;
+import com.draconra.bakingapp.model.Recipe;
 import com.draconra.bakingapp.util.helper.ConnectivityHelper;
-import com.draconra.bakingapp.util.network.NetworkUtils;
 import com.draconra.bakingapp.view.MainActivity;
 
-import java.io.IOException;
-import java.net.URL;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BakersWidget extends AppWidgetProvider {
 
@@ -37,18 +40,18 @@ public class BakersWidget extends AppWidgetProvider {
 
         String name;
 
-        if (preferenceString == context.getResources().getString(R.string.nutella_pie_key)){
+        if (preferenceString == context.getResources().getString(R.string.nutella_pie_key)) {
             name = "Nutella Pie";
-        }else if (preferenceString == context.getResources().getString(R.string.Brownies_key)){
+        } else if (preferenceString == context.getResources().getString(R.string.Brownies_key)) {
             name = "Brownies";
-        }else if (preferenceString == context.getResources().getString(R.string.yello_cake_key)){
-            name ="Yellow Cake";
-        }else{
+        } else if (preferenceString == context.getResources().getString(R.string.yello_cake_key)) {
+            name = "Yellow Cake";
+        } else {
             name = "Cheese Cake";
         }
 
         views.setTextViewText(R.id.recipeName, name);
-        Intent intent = new Intent(context,MainActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         views.setOnClickPendingIntent(R.id.relativeLayout, pendingIntent);
@@ -74,28 +77,21 @@ public class BakersWidget extends AppWidgetProvider {
                 RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_error_layout);
                 appWidgetManager.updateAppWidget(appWidgetId, views);
 
-            }else {
+            } else {
 
-                new AsyncTask<Void, Void, String>() {
+                Call<List<Recipe>> recipeResponseCall = AppController.getInstance().getApiService().getRecipes();
+                recipeResponseCall.enqueue(new Callback<List<Recipe>>() {
                     @Override
-                    protected String doInBackground(Void... params) {
-                        URL url = NetworkUtils.getUrl();
-                        String s = null;
-
-                        try {
-                            s = NetworkUtils.getResponseFromHttpUrl(url);
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                    public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                        if (response.isSuccessful()) {
+                            updateAppWidget(context, appWidgetManager, appWidgetId, AppController.getInstance().gson().toJson(response.body()));
                         }
-                        return s;
                     }
 
                     @Override
-                    protected void onPostExecute(String s) {
-                        super.onPostExecute(s);
-                        updateAppWidget(context, appWidgetManager, appWidgetId, s);
+                    public void onFailure(Call<List<Recipe>> call, Throwable t) {
                     }
-                }.execute();
+                });
             }
 
         }

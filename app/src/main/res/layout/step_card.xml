@@ -15,10 +15,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="22dp"
+            android:layout_marginLeft="@dimen/dp_22"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            tools:text="Step #1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
     </LinearLayout>
 

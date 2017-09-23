@@ -16,8 +16,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="8dp"
-
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#000000"
             tools:text="Ingredient Name" />
 
         <TextView
@@ -36,7 +36,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/ingredientQuantitys"
-
             android:layout_marginTop="8dp"
             android:background="#f2f2f2"
             android:orientation="horizontal" />

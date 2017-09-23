@@ -57,7 +57,7 @@ public class VideoFragment extends Fragment {
     private int pos, size = 0;
     private SimpleExoPlayer mPlayer;
 
-    VideoClickListener mCallback;
+    private VideoClickListener mCallback;
 
     public static final String AUTOPLAY = "autoplay";
     public static final String CURRENT_WINDOW_INDEX = "current_window_index";
@@ -155,9 +155,9 @@ public class VideoFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mPlayer == null) {
-            outState.putLong(PLAYBACK_POSITION, playbackPosition);
-            outState.putInt(CURRENT_WINDOW_INDEX, currentWindow);
+        if (mPlayer != null) {
+            outState.putLong(PLAYBACK_POSITION, mPlayer.getCurrentPosition());
+            outState.putInt(CURRENT_WINDOW_INDEX, mPlayer.getCurrentWindowIndex());
             outState.putBoolean(AUTOPLAY, autoPlay);
         }
     }
