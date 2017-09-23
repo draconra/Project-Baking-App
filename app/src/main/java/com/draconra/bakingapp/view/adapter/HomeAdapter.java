@@ -73,6 +73,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeViewHolder
     }
 
 
+    public void setDataAdapter(List<Recipe> recipes) {
+        recipeList.clear();
+        recipeList.addAll(recipes);
+        notifyDataSetChanged();
+    }
+
+
     class HomeViewHolder extends RecyclerView.ViewHolder {
 
         private TextView recipeName;

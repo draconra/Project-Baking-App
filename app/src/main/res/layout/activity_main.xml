@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="Error"
+            android:text="Check your network connection"
             android:visibility="invisible" />
 
     </FrameLayout>

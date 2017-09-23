@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.draconra.bakingapp.R;
 import com.draconra.bakingapp.util.helper.MediaPlayerHelper;
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;
@@ -132,7 +133,9 @@ public class VideoFragment extends Fragment {
     }
 
     private void initializePlayer() {
-        mPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), new DefaultTrackSelector(), new DefaultLoadControl());
+        mPlayer = ExoPlayerFactory.newSimpleInstance(
+                new DefaultRenderersFactory(getContext()),
+                new DefaultTrackSelector(), new DefaultLoadControl());
         mPlayerView.setPlayer(mPlayer);
         mPlayer.setPlayWhenReady(autoPlay);
 
@@ -161,7 +164,6 @@ public class VideoFragment extends Fragment {
 
     private void releasePlayer() {
         if (mPlayer != null) {
-            // save the player state before releasing its resources
             playbackPosition = mPlayer.getCurrentPosition();
             currentWindow = mPlayer.getCurrentWindowIndex();
             autoPlay = mPlayer.getPlayWhenReady();
@@ -173,7 +175,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (Util.SDK_INT <= 23) {
+        if (Util.SDK_INT > 23) {
             initializePlayer();
         }
     }
@@ -181,7 +183,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (Util.SDK_INT <= 23) {
+        if ((Util.SDK_INT <= 23 || mPlayer == null)) {
             initializePlayer();
         }
     }
@@ -205,9 +207,7 @@ public class VideoFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
+        releasePlayer();
     }
 
     @Override

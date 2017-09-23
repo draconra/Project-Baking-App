@@ -40,10 +40,11 @@ public class RecipeActivity extends BaseActivity implements RecipeDetailsFragmen
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         recipe = getIntent().getParcelableExtra(Intent.EXTRA_TEXT);
-        toolbar.setTitle(recipe.getName());
+        getSupportActionBar().setTitle(recipe.getName());
 
         if (findViewById(R.id.tablet_linear_layout) != null) {
             twoPanes = true; // Double-pane mode

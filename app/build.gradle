@@ -57,7 +57,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.3.1'
 
     //Exoplayer
-    compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
+    compile 'com.google.android.exoplayer:exoplayer:r2.4.0'
 
     //Idling Resource Espresso
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'

@@ -3,6 +3,7 @@ package com.draconra.bakingapp.controller;
 import android.util.Log;
 
 import com.draconra.bakingapp.AppController;
+import com.draconra.bakingapp.event.NetworkErrorEvent;
 import com.draconra.bakingapp.event.home.HomeEvent;
 import com.draconra.bakingapp.model.Recipe;
 import com.draconra.bakingapp.util.network.APIError;
@@ -32,6 +33,7 @@ public class HomeController extends BaseController {
             @Override
             public void onFailure(Call<List<Recipe>> call, Throwable t) {
                 Log.e("response", ""+t.getMessage());
+                eventBus.post(new NetworkErrorEvent(""));
             }
         });
     }

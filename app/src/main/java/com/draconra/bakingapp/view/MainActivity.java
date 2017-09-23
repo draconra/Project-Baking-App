@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity {
         } else {
             Snackbar snackbar = Snackbar.make(recipeRecyclerView, "Check your network connection", Snackbar.LENGTH_INDEFINITE);
             snackbar.show();
+            showUIErrorMessage();
         }
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -175,11 +176,11 @@ public class MainActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
         int scrollPosition = 0;
 
-        recipes = (ArrayList<Recipe>) homeAdapter.getData();
-
-        outState.putParcelableArrayList(Constant.CACHE_RECIPE, recipes);
-        // If a layout manager has already been set, get current scroll position.
         if (recipeRecyclerView.getLayoutManager() != null) {
+            recipes = (ArrayList<Recipe>) homeAdapter.getData();
+
+            outState.putParcelableArrayList(Constant.CACHE_RECIPE, recipes);
+
             scrollPosition = ((LinearLayoutManager) recipeRecyclerView.getLayoutManager())
                     .findFirstCompletelyVisibleItemPosition();
         }
